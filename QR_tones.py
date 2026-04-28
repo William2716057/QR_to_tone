@@ -5,23 +5,31 @@ import qrcode
 import winsound  # built-in on Windows, no install needed
 #pip uninstall pydub
 
-def play_tone(frequency, duration_ms=5000): #make slower
+#def_play_header():
+
+
+BOX_SIZE = 10
+TONE_BLACK = 300
+TONE_WHITE = 1000
+DURATION = 200
+
+def play_tone(frequency, duration_ms=DURATION): 
     "Play tone"
     winsound.Beep(frequency, duration_ms)
+
  
  
 def read_qr_and_play_tones(image):
-    """Read QR image pixel by pixel, low tone for black, high for white."""
-    img_array = np.array(image.convert("L"))  # convert to grayscale
- 
-    # Sample every 10th pixel
-    for row in img_array[::10]:
-        for pixel in row[::10]:
-            if pixel < 128:   # black
-                play_tone(frequency=300, duration_ms=100)
-            else:             # white
-                play_tone(frequency=1000, duration_ms=100)
- 
+    img_array = np.array(image.convert("L"))
+    h, w = img_array.shape
+    #print(f"Transmitting {w//BOX_SIZE}x{h//BOX_SIZE} modules...")
+
+    for row in img_array[BOX_SIZE//2::BOX_SIZE]:
+        for pixel in row[BOX_SIZE//2::BOX_SIZE]:
+            if pixel < 128:
+                play_tone(TONE_BLACK)
+            else:
+                play_tone(TONE_WHITE)
  
 def qr_gen():
     input_text = input("Input text: ")
@@ -33,7 +41,7 @@ def qr_gen():
         #greyscale here
         version=1,
         error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
+        box_size=BOX_SIZE,
         border=0,
     )
  
@@ -44,10 +52,8 @@ def qr_gen():
  
     plt.imshow(np.array(image))
     plt.axis('off')
-    plt.show()
+    plt.show() #remove
  
-    #play_tones = input("Play tones? (y/n): ").strip().lower()
-    #if play_tones == 'y':
     print("Playing tones...)")
     read_qr_and_play_tones(image)
  
