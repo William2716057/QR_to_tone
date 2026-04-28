@@ -6,7 +6,7 @@ import winsound  # built-in on Windows, no install needed
 #pip uninstall pydub
 
 def play_tone(frequency, duration_ms=5000): #make slower
-    """Play a tone using Windows built-in winsound."""
+    "Play tone"
     winsound.Beep(frequency, duration_ms)
  
  
@@ -46,11 +46,11 @@ def qr_gen():
     plt.axis('off')
     plt.show()
  
-    play_tones = input("Play tones? (y/n): ").strip().lower()
-    if play_tones == 'y':
-        print("Playing tones...)")
-        read_qr_and_play_tones(image)
+    #play_tones = input("Play tones? (y/n): ").strip().lower()
+    #if play_tones == 'y':
+    print("Playing tones...)")
+    read_qr_and_play_tones(image)
  
- 
+  
 if __name__ == "__main__":
     qr_gen()
