@@ -5,13 +5,14 @@ import qrcode
 import winsound  # built-in on Windows, no install needed
 #pip uninstall pydub
 
-#def_play_header():
+def play_header():
+    winsound.Beep(2000, 1000)  # 2000Hz for 1 second
 
 
 BOX_SIZE = 10
 TONE_BLACK = 300
 TONE_WHITE = 1000
-DURATION = 200
+DURATION = 200 #edit here
 
 def play_tone(frequency, duration_ms=DURATION): 
     "Play tone"
@@ -54,7 +55,8 @@ def qr_gen():
     plt.axis('off')
     plt.show() #remove
  
-    print("Playing tones...)")
+    play_header()
+    #print("Playing tones...)")
     read_qr_and_play_tones(image)
  
   
